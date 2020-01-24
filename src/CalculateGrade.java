@@ -30,7 +30,7 @@ public class CalculateGrade {
 			ask();
 			calculate();
 			while (true) {
-				System.out.println("Do you want to calculate this assignment with a new max score? (Y or N)");
+				System.out.println("Do you want to calculate another assignment in this class? (Y or N)");
 				String input = scanner.next();
 				if (input.compareToIgnoreCase("n") == 0) {
 					break;
@@ -68,6 +68,7 @@ public class CalculateGrade {
 
 	public static void ask() {
 
+		scanner = new Scanner(System.in);
 		System.out.print("Enter your class name: ");
 		className = scanner.nextLine();
 
