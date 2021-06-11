@@ -22,47 +22,50 @@ public class CalculateGrade {
 
 	public static void main(String[] args) {
 
-		/*
-		 * GUI f = new GUI(); f.setVisible(true);
-		 */
-		boolean again = true;
-		while (again) {
-			ask();
-			calculate();
-			while (true) {
-				System.out.println("Do you want to calculate another assignment in this class? (Y or N)");
-				String input = scanner.next();
-				if (input.compareToIgnoreCase("n") == 0) {
-					break;
-				} else if (input.compareToIgnoreCase("y") == 0) {
-					calculate();
+		GUI f = new GUI();
+		f.setVisible(true);
 
-				} else {
-					System.out.println("Invalid Input: Please try again. Input must be \"Y\" or \"N\"");
-				}
-			}
-			System.out.println("Do you want to calculate another assignment? (Y or N)");
-			while (true) {
-				String input = scanner.next();
-				if (input.compareToIgnoreCase("n") == 0) {
-					again = false;
-					break;
-				} else if (input.compareToIgnoreCase("y") == 0) {
-					again = true;
-					break;
-				} else {
-					System.out.println("Invalid Input: Please try again. Input must be \"Y\" or \"N\"");
-				}
-			}
-			className = "";
-			otherGrades = 0.0;
-			weight = 0;
-			currentGrade = 0.0;
-			possiblePointsCat = 0.0;
-			currentPointsCat = 0.0;
-			possiblePoints = 0;
-		}
-		System.out.println("\n\nThank You!\nThis program was created by Ansh Verma");
+		// boolean again = true;
+		// while (again) {
+		// ask();
+		// calculate();
+		// while (true) {
+		// System.out.println("Do you want to calculate another assignment in this
+		// class? (Y or N)");
+		// String input = scanner.next();
+		// if (input.compareToIgnoreCase("n") == 0) {
+		// break;
+		// } else if (input.compareToIgnoreCase("y") == 0) {
+		// calculate();
+
+		// } else {
+		// System.out.println("Invalid Input: Please try again. Input must be \"Y\" or
+		// \"N\"");
+		// }
+		// }
+		// System.out.println("Do you want to calculate another assignment? (Y or N)");
+		// while (true) {
+		// String input = scanner.next();
+		// if (input.compareToIgnoreCase("n") == 0) {
+		// again = false;
+		// break;
+		// } else if (input.compareToIgnoreCase("y") == 0) {
+		// again = true;
+		// break;
+		// } else {
+		// System.out.println("Invalid Input: Please try again. Input must be \"Y\" or
+		// \"N\"");
+		// }
+		// }
+		// className = "";
+		// otherGrades = 0.0;
+		// weight = 0;
+		// currentGrade = 0.0;
+		// possiblePointsCat = 0.0;
+		// currentPointsCat = 0.0;
+		// possiblePoints = 0;
+		// }
+		// System.out.println("\n\nThank You!\nThis program was created by Ansh Verma");
 
 	}
 
@@ -125,30 +128,29 @@ public class CalculateGrade {
 
 		try {
 			Thread.sleep(100);
-		
+
 			System.out.println("\n\n\n-----------------------------------");
 
-			//prints out everything
+			// prints out everything
 			System.out.println("Your current grade is " + currentGrade + " in " + className);
 			Thread.sleep(500);
-			System.out.println("To get above a 90% in " + className + ", your grade on the assignment "
-									+ "needs to be at least " + lowestPoints + "/" + possiblePoints 
-									+ " or about " + lowestPercent + "%");
+			System.out.println(
+					"To get above a 90% in " + className + ", your grade on the assignment " + "needs to be at least "
+							+ lowestPoints + "/" + possiblePoints + " or about " + lowestPercent + "%");
 			System.out.println("\nGetting this score would put your grade at " + percentWithLowScore + "%");
 			Thread.sleep(500);
-			System.out.println("If you get 100% on this test, your grade in this class would be " + percentWithHighScore);
-			
+			System.out
+					.println("If you get 100% on this test, your grade in this class would be " + percentWithHighScore);
+
 			System.out.println("-----------------------------------\n");
 			Thread.sleep(1500);
-			
+
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
+
 	public static double calculatePercent(double points) {
-		return ((points + currentPointsCat) / 
-				(possiblePointsCat + possiblePoints) * 
-				weight) + otherGrades;		
+		return ((points + currentPointsCat) / (possiblePointsCat + possiblePoints) * weight) + otherGrades;
 	}
 }
-	
