@@ -7,9 +7,7 @@ import java.text.*;
 public class GUI extends JFrame {
 
 	private double currentGrade = 0.0;
-
-	private int weight = 0;
-
+	private double weight = 0;
 	private double possiblePointsAssignment = 0;
 	private double possiblePointsCategory = 0.0;
 	private double currentPointsCategory = 0.0;
@@ -99,7 +97,7 @@ public class GUI extends JFrame {
 
 			textBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					updateItem(true, 1, textBox);
+					updateItem(1, textBox);
 					textBox.transferFocus();
 				}
 			});
@@ -109,7 +107,7 @@ public class GUI extends JFrame {
 				}
 
 				public void focusLost(FocusEvent e) {
-					updateItem(true, 1, textBox);
+					updateItem(1, textBox);
 				}
 			});
 		} else if (i == 2) {
@@ -122,7 +120,7 @@ public class GUI extends JFrame {
 
 			textBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					updateItem(false, 2, textBox);
+					updateItem(2, textBox);
 					textBox.transferFocus();
 				}
 			});
@@ -132,7 +130,7 @@ public class GUI extends JFrame {
 				}
 
 				public void focusLost(FocusEvent e) {
-					updateItem(false, 2, textBox);
+					updateItem(2, textBox);
 				}
 			});
 		} else if (i == 3) {
@@ -145,7 +143,7 @@ public class GUI extends JFrame {
 
 			textBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					updateItem(true, 3, textBox);
+					updateItem(3, textBox);
 					textBox.transferFocus();
 				}
 			});
@@ -155,7 +153,7 @@ public class GUI extends JFrame {
 				}
 
 				public void focusLost(FocusEvent e) {
-					updateItem(true, 3, textBox);
+					updateItem(3, textBox);
 				}
 			});
 		} else if (i == 4) {
@@ -168,7 +166,7 @@ public class GUI extends JFrame {
 
 			textBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					updateItem(true, 4, textBox);
+					updateItem(4, textBox);
 					textBox.transferFocus();
 				}
 			});
@@ -178,7 +176,7 @@ public class GUI extends JFrame {
 				}
 
 				public void focusLost(FocusEvent e) {
-					updateItem(true, 4, textBox);
+					updateItem(4, textBox);
 				}
 			});
 		} else if (i == 5) {
@@ -192,7 +190,7 @@ public class GUI extends JFrame {
 
 			textBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					updateItem(true, 5, textBox);
+					updateItem(5, textBox);
 					textBox.transferFocus();
 				}
 			});
@@ -202,7 +200,7 @@ public class GUI extends JFrame {
 				}
 
 				public void focusLost(FocusEvent e) {
-					updateItem(true, 5, textBox);
+					updateItem(5, textBox);
 				}
 			});
 		}
@@ -214,48 +212,33 @@ public class GUI extends JFrame {
 	// When the user types a new value into one of the quantity fields, parse the
 	// input and update the ShoppingCart. Display an error message if text is not a
 	// number or is negative.
-	private void updateItem(boolean isDouble, int variable, JTextField quantity) {
+	private void updateItem(int variable, JTextField quantity) {
 		String text = quantity.getText().trim();
-		if (isDouble) {
-			double number;
-			try {
-				number = Double.parseDouble(text);
-			} catch (NumberFormatException error) {
-				number = 0;
-			}
-			if (number < 0 && text.length() > 0 || text.length() == 0) {
-				Toolkit.getDefaultToolkit().beep();
-				quantity.setText("0.0");
-				number = 0;
-				return;
-			}
-			if (variable == 1) {
-				currentGrade = number;
-			} else if (variable == 3) {
-				possiblePointsAssignment = number;
-			} else if (variable == 4) {
-				possiblePointsCategory = number;
-			} else if (variable == 5) {
-				currentPointsCategory = number;
-			}
-		} else {
-			int number;
-			try {
-				number = Integer.parseInt(text);
-			} catch (NumberFormatException error) {
-				number = 0;
-			}
-			if (number < 0 && text.length() > 0 || text.length() == 0) {
-				Toolkit.getDefaultToolkit().beep();
-				quantity.setText("0");
-				number = 0;
-				return;
-			}
 
-			if (variable == 2) {
-				weight = number;
-			}
+		double number;
+		try {
+			number = Double.parseDouble(text);
+		} catch (NumberFormatException error) {
+			number = 0;
 		}
+		if (number < 0 && text.length() > 0 || text.length() == 0) {
+			Toolkit.getDefaultToolkit().beep();
+			quantity.setText("0.0");
+			number = 0;
+			return;
+		}
+		if (variable == 1) {
+			currentGrade = number;
+		} else if (variable == 2) {
+			weight = number;
+		} else if (variable == 3) {
+			possiblePointsAssignment = number;
+		} else if (variable == 4) {
+			possiblePointsCategory = number;
+		} else if (variable == 5) {
+			currentPointsCategory = number;
+		}
+
 		updateAnswers();
 
 	}
@@ -263,9 +246,11 @@ public class GUI extends JFrame {
 	// reset the text field for order total
 	private void updateAnswers() {
 
-		if (weight != 100)
+		if (weight != 100) {
 			otherGrades = currentGrade - (currentPointsCategory / possiblePointsCategory) * weight;
-
+		} else {
+			otherGrades = 0;
+		}
 		double lowestPoints = possiblePointsAssignment;
 
 		for (double i = possiblePointsAssignment; i >= 0; i -= 0.1) {
@@ -285,13 +270,13 @@ public class GUI extends JFrame {
 
 		// round everything to two decimal places
 		lowestPoints = (double) ((int) (((double) lowestPoints) * 100)) / 100;
-		lowestPercent = (double) ((int) (((double) (lowestPercent) * 100) * 10000)) / 10000;
-		percentWithHighScore = (double) ((int) (((double) (percentWithHighScore) * 100) * 10000)) / 10000;
+		lowestPercent = (double) ((int) (((double) lowestPercent) * 10000)) / 100;
+		percentWithHighScore = (double) ((int) (((double) percentWithHighScore) * 10000)) / 100;
 		possiblePointsAssignment = (double) ((int) (((double) possiblePointsAssignment) * 100)) / 100;
 
 		LowPoints.setText(lowestPoints + "/" + possiblePointsAssignment);
-		LowPointPercent.setText((int) lowestPercent + "%");
-		HighPointPercent.setText((int) percentWithHighScore + "%");
+		LowPointPercent.setText(lowestPercent + "%");
+		HighPointPercent.setText(percentWithHighScore + "%");
 
 	}
 
